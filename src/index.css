@@ -1,0 +1,138 @@
+body ,html,#root{
+  margin: 0;
+  padding: 0;
+ 
+}
+
+
+ul{
+  list-style: none;
+}
+#root{
+	height: 100%}
+
+header{
+	color: white;
+}
+header a{
+	display: inline-block;
+	color: white;
+	cursor:pointer;
+	padding:10px;
+	float: left;
+}
+.App-header {
+  text-align: center;
+  padding: 50px;
+  
+
+}
+.App-header>*{
+  display:inline-block ; 
+  vertical-align: middle;
+  cursor:pointer;
+}
+.App-header h2{
+  margin-left: 10px;
+}
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.circle-medium{
+  width: 60px;
+  height: 60px;
+  
+}
+.circle-min{
+	width: 22px;
+  	height: 22px;
+}
+.list-users{
+	padding: 20px 30px;
+}
+.list-users li{
+	padding: 10px 0;
+	cursor: pointer;
+}
+.list-users li>a{
+	color: #6f6969;
+    display: inline-block;
+    width: 100%;
+}
+
+.card-panel{
+	margin: .5rem auto 1rem;
+}
+.page-footer {
+ position:fixed;
+ left: 0;
+ bottom: 0;
+ width: 100%;
+  padding: 1em;
+}
+.container{
+	width: 96%;
+}
+.container .row{
+	margin-left: auto;
+	margin-right: auto;
+}
+.chat{
+	overflow: hidden;
+    margin-bottom: 6em;
+}
+.chat .card{
+	margin-bottom:3em;
+	width: 60%;
+}
+.chat .card div>p{
+	word-wrap: break-word;
+	text-transform: capitalize;
+	
+}
+.page-footer textarea{
+	text-transform: capitalize;
+}
+i.right{
+	margin-left: auto;
+}
+.remote-message img{
+	margin:10px 0;
+}
+.local-message img{
+	margin:6px 0;
+}
+
+.remote-message p{
+	margin-left: 1em;
+	
+}
+.disabled.btn-large, .btn-floating.disabled, .btn-large.disabled{
+	background-color:#6ccc88 !important;
+}
+
+@media screen and (max-width:625px){
+	.right,.left{
+		float: none !important;
+	}
+	.circle-min{
+		width: 60px;
+  		height: 60px;
+	}
+	.remote-message,.local-message{
+		float:none;
+	}
+	.chat .card{
+		width:auto !important;
+	}
+	.chat{
+	
+    	margin-bottom: 8em;
+	}
+}
+
