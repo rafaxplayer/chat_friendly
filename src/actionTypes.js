@@ -1,0 +1,5 @@
+export const LOGIN_USER = 'login_user'
+export const LIST_USERS = 'list_users'
+export const IS_CHAT = 'is_chat'
+export const GET_MESSAGES = 'get_messages'
+export const CLEAR_MESSAGES = 'clear_messages'

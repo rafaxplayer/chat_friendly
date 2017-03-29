@@ -3,9 +3,8 @@ import UserImage from '../../resources/user.png'
 import { Link } from 'react-router-dom'
 import NotLogin from './NotLogin'
 import { connect } from 'react-redux'
-import { getUsersList } from '../../actions'
+import { getUsersList, stopUsersRef } from '../../actions'
 class ListUsers extends React.Component {
-
   
   componentWillMount () {
     console.log('mount ListUsers')
@@ -16,7 +15,7 @@ class ListUsers extends React.Component {
 
   componentWillUnmount () {
     console.log('unmount ListUsers')
-    
+    this.props.stopUsersRef();
   }
 
   checkUser(user){
@@ -69,4 +68,4 @@ function mapStateToProps(state){
     users:state.users.list
   }
 }
-export default connect(mapStateToProps,{getUsersList})(ListUsers);
+export default connect(mapStateToProps,{ getUsersList, stopUsersRef })(ListUsers);

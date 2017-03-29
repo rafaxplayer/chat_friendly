@@ -3,72 +3,42 @@ import firebase from 'firebase'
 import ChatReply from '../items/ChatReply'
 import Message from '../items/Message'
 import NotLogin from './NotLogin'
-import $ from 'jquery'
 import { connect } from 'react-redux'
-import { isChat } from '../../actions'
+import { isChat, getMessagesChat, stopMessagesRef ,clearMessages} from '../../actions'
 
 class Chat extends React.Component{
 	
 	constructor (props) {
     	super(props)
-  		this.state = {
-			messages:[]
-			
-		};
-		this.remoteid = this.props.match.params.userid
-		this.user = this.props.user
-    	this.messagesRef = firebase.database().ref('messages')
+  		
+		this.remoteid = props.match.params.userid
+		this.messagesRef = firebase.database().ref('messages')
   	}
   	
 	componentWillMount () {
 		console.log('mount chat')
-		
 		console.log(this.props)
 		this.props.isChat(true);
-		const self = this;
-		
-		if(this.user){
-			this.messagesRef.on('value', (snapshot) => {
-    		var newData=[]
-    			snapshot.forEach(function(data){
-    				if ((data.val().from === self.user.uid && data.val().to === self.remoteid) || (data.val().from === self.remoteid && data.val().to === self.user.uid)) {
-                		newData.push(data.val())
-            		}
-    			})
-				self.setState({messages:newData});
-  				$('body,html').animate({ scrollTop: $(document).height() }, 'slow')
-    			this.setLookAllMessages();
-      		})
-		}
- 		
+		this.props.getMessagesChat(this.props.user,this.remoteid)
+	 		
   	}
 
-	
-  	setLookAllMessages(){
-  		const self = this
-  		this.messagesRef.once('value', (snapshot) => {
-  			snapshot.forEach(function(data){
-	    		if ((data.val().from === self.remoteid && data.val().to === self.user.uid) && (!data.val().look) ) {
-        
-	                self.messagesRef.child(data.val().id).update({look:true})
-	            }
-    		})
-  		})
-  	}
 
 	componentWillUnmount () {
-		this.props.isChat(false);
+		this.props.isChat(false)
+		this.props.stopMessagesRef()
+		this.props.clearMessages()
 		console.log('unmount chat')
-		this.messagesRef.off()
+		
 	}
 	
 
 	handleMessage(text){
 		let messageDB = this.messagesRef.push();
 		let message = {
-			avatar:this.user.photoURL.length > 0 ? this.user.photoURL:'',
-			email:this.user.email,
-			from:this.user.uid,
+			avatar:this.props.user.photoURL.length > 0 ? this.props.user.photoURL:'',
+			email:this.props.user.email,
+			from:this.props.user.uid,
 			id:messageDB.key,
 			to:this.remoteid,
 			look:false,
@@ -78,16 +48,14 @@ class Chat extends React.Component{
 		messageDB.set(message);
 	}
 
-	renderMessages(user){
+	renderMessages(){
 		
-		if(user){
+		if(this.props.user != null){
 			return(
 				<div>
 					<ul className="chat">
 					{
-					
-						this.state.messages.map((msg,i)=><Message key={msg.id} message={msg} user={user}/>)
-							
+						this.props.messages.map((msg,i)=><Message key={msg.id} message={msg} user={this.props.user}/>)
 					}
 					</ul>
 					<ChatReply onSendMessage={this.handleMessage.bind(this)}/>
@@ -107,7 +75,7 @@ class Chat extends React.Component{
 		return(
 				<div id="chat" className="container">
 				{
-					this.renderMessages(this.user)
+					this.renderMessages()
 					
 				}
 				</div>
@@ -118,8 +86,9 @@ class Chat extends React.Component{
 function mapStateToProps(state){
 
 	return{
-		user:state.users.userauth
+		user:state.users.userauth,
+		messages:state.messages.list
 	}
 }
 
-export default connect(mapStateToProps,{isChat})(Chat);
+export default connect(mapStateToProps,{isChat, getMessagesChat, stopMessagesRef, clearMessages})(Chat);

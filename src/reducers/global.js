@@ -1,4 +1,4 @@
-import { IS_CHAT} from '../constants'
+import { IS_CHAT} from '../actionTypes'
 
 const initialState={
     ischat:false

@@ -25,7 +25,7 @@ onChange(event){
 
 render(){
   return (
-    <footer className='page-footer blue lighten-4'>
+    <footer className='page-footer blue lighten-5'>
     <form  onSubmit={this.handleSubmit}>
       <div className='row'>
         <div className='col s8 m10 l11'>

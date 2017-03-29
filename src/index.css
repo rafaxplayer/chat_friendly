@@ -4,7 +4,6 @@ body ,html,#root{
  
 }
 
-
 ul{
   list-style: none;
 }
@@ -24,8 +23,7 @@ header a{
 .App-header {
   text-align: center;
   padding: 50px;
-  
-
+ 
 }
 .App-header>*{
   display:inline-block ; 
@@ -34,6 +32,10 @@ header a{
 }
 .App-header h2{
   margin-left: 10px;
+}
+.App-header .navbar>li:nth-child(2){
+	padding: 5px 0;
+
 }
 .App-intro {
   font-size: large;
@@ -46,7 +48,7 @@ header a{
 .circle-medium{
   width: 60px;
   height: 60px;
-  
+ 
 }
 .circle-min{
 	width: 22px;

@@ -1,4 +1,4 @@
-import { LOGIN_USER,LIST_USERS} from '../constants'
+import { LOGIN_USER,LIST_USERS} from '../actionTypes'
 
 const initialState={
     userauth:null,
