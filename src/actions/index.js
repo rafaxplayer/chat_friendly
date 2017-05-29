@@ -1,7 +1,9 @@
 import { LOGIN_USER, LIST_USERS, IS_CHAT, GET_MESSAGES, CLEAR_MESSAGES } from '../actionTypes'
+import { TYPE_MESSAGES, TYPE_USERS } from '../constants'
 import firebase from 'firebase'
 import $ from 'jquery'
-var config = {
+
+let config = {
   apiKey: 'AIzaSyCwue8a7z1Ag9QRl3kaMhcG5QMe02S9J48',
   authDomain: 'chat-friendly-b866c.firebaseapp.com',
   databaseURL: 'https://chat-friendly-b866c.firebaseio.com',
@@ -46,7 +48,7 @@ export function login(){
 }
 
 export function logout(){
-    return dispatch =>{
+    return dispatch => {
         let user = firebase.auth().currentUser
         removeUserToServer(user)
         firebase.auth().signOut()
@@ -58,10 +60,10 @@ export function logout(){
 }
 
 export function getUsersList(){
-    return dispatch =>{
+    return dispatch => {
         usersRef.on('value', (snapshot)=> {
             if(snapshot.val() != null){
-                var newdata=[]
+                const newdata=[]
                 snapshot.forEach(function(data){
                     newdata.push(data.val())
                 })
@@ -72,11 +74,11 @@ export function getUsersList(){
 }
 
 export function getMessagesChat(userauth, remoteid){
-    return dispatch =>{
+    return dispatch => {
         if(userauth){
 			messagesRef.on('value', (snapshot) => {
-    		var newData=[]
-    			snapshot.forEach(function(data){
+    		const newData=[]
+    			snapshot.forEach(data =>{
     				if ((data.val().from === userauth.uid && data.val().to === remoteid) || (data.val().from === remoteid && data.val().to === userauth.uid)) {
                 		newData.push(data.val())
             		}
@@ -84,7 +86,7 @@ export function getMessagesChat(userauth, remoteid){
 				dispatch({type:GET_MESSAGES,payload:newData});
   				$('body,html').animate({ scrollTop: $(document).height() }, 'slow')
     			messagesRef.once('value', (snapshot) => {
-  			        snapshot.forEach(function(data){
+  			        snapshot.forEach(data =>{
 	    		        if ((data.val().from === remoteid && data.val().to === userauth.uid) && (!data.val().look) ) {
         
 	                        messagesRef.child(data.val().id).update({look:true})
@@ -100,17 +102,21 @@ export function clearMessages(){
         type:CLEAR_MESSAGES
     }
 }
-export function stopUsersRef(){
-    console.log("usersRef Off")
-    usersRef.off();
-    return{
-        type:'', 
-        payload:null
+
+export function stopRef(type){
+    console.log(`Stop ref ${type}`)
+    switch(type){
+        case TYPE_MESSAGES:
+            messagesRef.off();
+        break;
+        case TYPE_USERS:
+            usersRef.off();
+        break;
+        default:
+
+        break;
     }
-}
-export function stopMessagesRef(){
-    console.log("messagesRef Off")
-    messagesRef.off();
+    
     return{
         type:'', 
         payload:null
@@ -127,7 +133,7 @@ export function isChat(bool){
 
 function saveUserToserver(user){
     if(user !== null){
-      var newUser={
+      const newUser={
         avatar:user.photoURL ? user.photoURL:'',
         email:user.email,
         name:user.displayName.lenght > 0 ? user.displayName:'No Set',

@@ -1,44 +1,31 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-class ChatReply extends Component {
+class ChatReply extends React.Component {
 
-constructor (props) {
-    super(props)
-    this.onChange= this.onChange.bind(this)
-    this.handleSubmit= this.handleSubmit.bind(this)
-    this.state={
-      enableButtonSend:false
-    }
+  state = { enableButtonSend:false};
+
+  handleSubmit = () => {
+      this.props.onSendMessage(this.refs.inp.value)
+      this.refs.inp.value = ''
+      this.setState({enableButtonSend:false});
   }
 
-handleSubmit() {
-   
-    this.props.onSendMessage(this.refs.inp.value)
-    this.refs.inp.value = ''
-    this.setState({enableButtonSend:false});
-}
-
-onChange(event){ 
-    this.setState({enableButtonSend:event.target.value.length > 0});
- 
-}
-
-render(){
-  return (
-    <footer className='page-footer blue lighten-5'>
-    <form  onSubmit={this.handleSubmit}>
-      <div className='row'>
-        <div className='col s8 m10 l11'>
-          <textarea name='text' ref="inp" type='text' rows="3" onChange={this.onChange} onFocus={this.onChange}></textarea>
-        </div>
-        <div className='col s4 m2 l1'>
-          <a ref='sendbutton' onClick={this.handleSubmit} className={`btn-floating btn-large waves-effect waves-light green accent-4${this.state.enableButtonSend ? '':' disabled'}`}><i className='material-icons right'>send</i></a>
-        </div>
-      </div>
-    </form>
-    </footer>
-  )
-}
+  onChange = event => this.setState({enableButtonSend:event.target.value.length > 0})
+  
+  render = () => (
+      <footer className='page-footer blue lighten-5'>
+      <form  onSubmit={this.handleSubmit.bind(this)}>
+        
+          <div className='text-reply'>
+            <textarea name='text' ref="inp" type='text' rows="3" onChange={this.onChange.bind(this)} onFocus={this.onChange.bind(this)}></textarea>
+          </div>
+          <div className='button-reply'>
+            <a ref='sendbutton' onClick={this.handleSubmit.bind(this)} className={`btn-floating btn-large waves-effect waves-light green accent-4${this.state.enableButtonSend ? '':' disabled'}`}><i className='material-icons right'>send</i></a>
+          </div>
+       
+      </form>
+      </footer>
+    )
   
 }
 

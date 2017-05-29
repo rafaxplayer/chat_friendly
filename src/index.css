@@ -1,6 +1,9 @@
-body ,html,#root{
+body ,html, #root{
   margin: 0;
   padding: 0;
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
  
 }
 
@@ -8,7 +11,7 @@ ul{
   list-style: none;
 }
 #root{
-	height: 100%}
+	height: 100vh}
 
 header{
 	color: white;
@@ -23,19 +26,19 @@ header a{
 .App-header {
   text-align: center;
   padding: 50px;
- 
+	display: flex;
+	align-items: center;
+	
 }
-.App-header>*{
-  display:inline-block ; 
-  vertical-align: middle;
-  cursor:pointer;
-}
-.App-header h2{
-  margin-left: 10px;
-}
+
 .App-header .navbar>li:nth-child(2){
 	padding: 5px 0;
 
+}
+.App-header .navbar,
+.App-header img
+{
+	margin-left: auto;
 }
 .App-intro {
   font-size: large;
@@ -45,6 +48,9 @@ header a{
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+.circle{
+	    border: 2px solid #b0b0b5 !important;
+}
 .circle-medium{
   width: 60px;
   height: 60px;
@@ -52,7 +58,7 @@ header a{
 }
 .circle-min{
 	width: 22px;
-  	height: 22px;
+  height: 22px;
 }
 .list-users{
 	padding: 20px 30px;
@@ -85,52 +91,97 @@ header a{
 	margin-right: auto;
 }
 .chat{
-	overflow: hidden;
-    margin-bottom: 6em;
+	margin-bottom: 6em;
+	display: flex;
+	flex-direction: column;
 }
-.chat .card{
+.chat .message{
 	margin-bottom:3em;
 	width: 60%;
+	display: flex;
+	align-items: center;
+
 }
-.chat .card div>p{
-	word-wrap: break-word;
+.chat .card .msg > p{
+	overflow-wrap: break-word;
 	text-transform: capitalize;
 	
 }
+.chat .message .avatar{
+	margin: 0 5px
+	
+}
+
+.chat .card{
+	display: flex;
+	flex:1;
+	padding: 5px 10px;
+	border-radius: 10px !important;
+	
+}
+
+.chat .card .msg{
+	flex:1;
+	width: 0px;
+	
+}
+.chat .card .check{
+	
+}
+.remote-message{
+
+}
+.local-message{
+	align-self: flex-end
+}
+
 .page-footer textarea{
 	text-transform: capitalize;
 }
 i.right{
 	margin-left: auto;
 }
-.remote-message img{
-	margin:10px 0;
-}
-.local-message img{
-	margin:6px 0;
-}
 
-.remote-message p{
-	margin-left: 1em;
-	
-}
 .disabled.btn-large, .btn-floating.disabled, .btn-large.disabled{
 	background-color:#6ccc88 !important;
 }
 
+.not-login{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+}
+.not-login img{
+	transition: all .2s
+}
+
+.not-login img:hover{
+	transform: scale(1.1);
+}
+
+.page-footer form{
+	display: flex;
+	align-items: center;
+}
+
+.page-footer form .text-reply{
+	flex:1;
+}
+
+.page-footer form .button-reply{
+	margin-left: 10px;
+}
+
 @media screen and (max-width:625px){
-	.right,.left{
-		float: none !important;
-	}
+	
 	.circle-min{
-		width: 60px;
+			width: 60px;
   		height: 60px;
 	}
-	.remote-message,.local-message{
-		float:none;
-	}
-	.chat .card{
-		width:auto !important;
+	.App-header{display: block;}
+	.chat .message{
+		width:100%;
 	}
 	.chat{
 	

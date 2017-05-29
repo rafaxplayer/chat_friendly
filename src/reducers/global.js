@@ -1,15 +1,10 @@
-import { IS_CHAT} from '../actionTypes'
+import { IS_CHAT } from '../actionTypes'
 
-const initialState={
-    ischat:false
-};
-
-export default function(state = initialState, action){
+export default (state = { ischat:false }, action) => {
     switch(action.type){
         case IS_CHAT:
             return Object.assign({},state,{ischat:action.payload})
-        
-        default:
+         default:
             return state;
 
     }
